@@ -2,6 +2,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView,RetrieveAPIView, 
 from rest_framework.permissions import IsAuthenticated
 
 from lessons.models import Lesson
+from lessons.paginations import CustomLessonsPagination
 from lessons.serializers import LessonSerializer
 from users.permissions import IsModerator, IsOwner
 
@@ -9,7 +10,7 @@ from users.permissions import IsModerator, IsOwner
 class LessonCreateAPIView(CreateAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = (-IsModerator, IsAuthenticated,)
+    permission_classes = (~IsModerator, IsAuthenticated,)
 
     def perform_create(self, serializer):
         lesson = serializer.save()
@@ -20,6 +21,7 @@ class LessonCreateAPIView(CreateAPIView):
 class LessonListAPIView(ListAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    pagination_class = CustomLessonsPagination
 
 
 class LessonRetrieveAPIView(RetrieveAPIView):
@@ -37,4 +39,4 @@ class LessonUpdateAPIView(UpdateAPIView):
 class LessonDestroyAPIView(DestroyAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = (IsAuthenticated, -IsModerator | IsOwner,)
+    permission_classes = (IsAuthenticated, ~IsModerator | IsOwner,)
