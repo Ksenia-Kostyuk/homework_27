@@ -41,7 +41,7 @@ class SubscriptionTestCase(APITestCase):
         )
 
     def test_subscription_delete(self):
-        url = reverse('users:subscription-delete')
+        url = reverse('users:subscription-delete', args=(self.subscription.pk,))
         response = self.client.patch(url)
         print(response.json())
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
