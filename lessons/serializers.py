@@ -9,7 +9,7 @@ class LessonSerializer(serializers.ModelSerializer):
     name = serializers.URLField(validators=[validate_acceptable_url])
 
     def get_course(self, course):
-        return [cour.name for cour in Course.objects.filter(course=course)]
+        return [cour.name for cour in Course.objects.filter(name=course)]
 
     class Meta:
         model = Course

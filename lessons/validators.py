@@ -1,6 +1,6 @@
 from rest_framework.serializers import ValidationError
 
-acceptable_url = 'youtube.com'
+acceptable_url = 'https://www.youtube.com/'
 
 
 def validate_acceptable_url(value):
