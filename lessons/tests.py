@@ -40,7 +40,7 @@ class LessonTestCase(APITestCase):
         self.assertEqual(Lesson.objects.all().count(), 2)
 
     def test_lesson_update(self):
-        url = reverse('lessons:lessons_retrieve')
+        url = reverse('lessons:lessons_retrieve', args=(self.lesson.pk,))
         data = {
             'name': 'Палитра'
         }
@@ -50,7 +50,7 @@ class LessonTestCase(APITestCase):
         self.assertEqual(data.get('name'), 'Палитра')
 
     def test_lesson_delete(self):
-        url = reverse('lessons:lessons_retrieve')
+        url = reverse('lessons:lessons_retrieve', args=(self.lesson.pk,))
         response = self.client.patch(url)
         print(response.json())
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
