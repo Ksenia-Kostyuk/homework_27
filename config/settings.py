@@ -18,10 +18,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
+    'drf_yasg',
     'users',
     'courses',
     'lessons',
-    'django_filters',
+
 ]
 
 MIDDLEWARE = [
@@ -108,3 +110,5 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+STRIPE_API_KEY = 'sk_test_51Pp8SSP654LKt0QRexCl2nbXSF6BLdeIKBTTiQPiLB81Wdw6NCYePlKqB9r5eJY8JA1t1v4nUxx7iHFaN62GZ0dx00Xh0BIeO4'

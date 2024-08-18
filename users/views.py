@@ -9,7 +9,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from courses.models import Course
 from users.models import Payment, User, Subscription
-from users.serializers import UserSerializer, SubscriptionSerializer
+from users.serializers import UserSerializer, SubscriptionSerializer, PaymentSerializer
+from users.services import create_stripe_product, create_stripe_price, create_stripe_sessions
 
 
 class SubscriptionAPIView(APIView):
@@ -55,11 +56,18 @@ class SubscriptionCreateAPIView(CreateAPIView):
     queryset = Subscription.objects.all()
 
 
-class PaymentViewSet(ModelViewSet):
+class PaymentCreateAPIVies(CreateAPIView):
+    serializer_class = PaymentSerializer
     queryset = Payment.objects.all()
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    filter_fields = ('course', 'lesson', 'method',)
-    ordering_fields = ('date',)
+
+    def perform_create(self, serializer):
+        product = create_stripe_product()
+        payment = serializer.save(user=self.request.user)
+        price = create_stripe_price(payment.amount, product)
+        session_id, payment_link = create_stripe_sessions(price)
+        payment.session_id = session_id
+        payment.link = payment_link
+        payment.save()
 
 
 class UserCreateAPIView(CreateAPIView):

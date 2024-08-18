@@ -24,14 +24,19 @@ class Payment(models.Model):
     METHOD_CHOICES = [('cash', 'наличные'), ('transfer_to_an_account', 'перевод на счет')]
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, verbose_name='Пользователь')
     date = models.DateTimeField(verbose_name='Дата оплаты')
-    amount = models.IntegerField(verbose_name='Сумма оплаты')
+    amount = models.PositiveIntegerField(verbose_name='Сумма оплаты')
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL, verbose_name='Оплаченный курс')
     lesson = models.ForeignKey(Lesson, null=True, on_delete=models.SET_NULL, verbose_name='Оплаченный урок')
     method = models.CharField(max_length=100, choices=METHOD_CHOICES, verbose_name='Способ оплаты')
+    session_id = models.CharField(max_length=255, blank=True, null=True, verbose_name='id cессии')
+    link = models.URLField(max_length=400, blank=True, null=True, verbose_name='Ссылка на оплату')
 
     class Meta:
         verbose_name = 'Платеж'
         verbose_name_plural = 'Платежи'
+
+    def __str__(self):
+        return self.amount
 
 
 class Subscription(models.Model):
