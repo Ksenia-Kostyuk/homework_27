@@ -21,43 +21,38 @@ class LessonTestCase(APITestCase):
         url = reverse('lessons:lessons_retrieve', args=(self.lesson.pk,))
         response = self.client.get(url)
         data = response.json()
-        print(response.json())
         self.assertEqual(
             response.status_code, status.HTTP_200_OK
         )
         self.assertEqual(data.get('name'), self.lesson.name)
 
     def test_lesson_create(self):
-        url = reverse('lessons:lessons_list')
+        url = reverse('lessons:lessons_create')
         data = {
             'name': 'Палитра',
             'video': 'https://www.youtube.com/',
             'course': self.course.name
         }
         response = self.client.post(url, data)
-        print(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Lesson.objects.all().count(), 2)
 
     def test_lesson_update(self):
-        url = reverse('lessons:lessons_retrieve', args=(self.lesson.pk,))
+        url = reverse('lessons:lessons_update', args=(self.lesson.pk,))
         data = {
             'name': 'Палитра'
         }
         response = self.client.patch(url, data)
-        print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(data.get('name'), 'Палитра')
 
     def test_lesson_delete(self):
-        url = reverse('lessons:lessons_retrieve', args=(self.lesson.pk,))
-        response = self.client.patch(url)
-        print(response.json())
+        url = reverse('lessons:lessons_delete', args=(self.lesson.pk,))
+        response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Lesson.objects.all().count(), 1)
+        self.assertEqual(Lesson.objects.all().count(), 0)
 
     def test_lesson_list(self):
         url = reverse('lessons:lessons_list')
         response = self.client.get(url)
-        print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)

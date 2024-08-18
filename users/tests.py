@@ -19,17 +19,15 @@ class SubscriptionTestCase(APITestCase):
     def test_subscription_create(self):
         url = reverse('users:subscription-create')
         data = {
-            "user": self.user,
-            "course": self.course
+            "user": self.user.pk,
+            "course": self.course.pk
         }
         response = self.client.post(url, data)
-        print(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_subscription_list(self):
         url = reverse('users:subscription-list')
         response = self.client.get(url)
-        print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_subscription_retrieve(self):
@@ -42,6 +40,5 @@ class SubscriptionTestCase(APITestCase):
 
     def test_subscription_delete(self):
         url = reverse('users:subscription-delete', args=(self.subscription.pk,))
-        response = self.client.patch(url)
-        print(response.json())
+        response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
