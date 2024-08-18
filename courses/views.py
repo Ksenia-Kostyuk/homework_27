@@ -19,7 +19,7 @@ class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
     pagination_class = CustomCoursesPagination
 
-    @action(detail=True, method=('post',))
+    @action(detail=True, methods=('post',))
     def updates(self, request, pk):
         course = get_object_or_404(Course, pk=pk)
         if course.update.exists():
