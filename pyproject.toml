@@ -17,6 +17,10 @@ ipython = "^8.26.0"
 drf-yasg = "^1.21.7"
 setuptools = "^72.2.0"
 stripe = "^10.8.0"
+eventlet = "^0.36.1"
+celery = "^5.4.0"
+redis = "^5.0.8"
+django-celery-beat = "^2.6.0"
 
 
 [build-system]

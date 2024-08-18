@@ -6,6 +6,7 @@ class Course(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
     preview = models.ImageField(upload_to='courses/preview', blank=True, null=True, verbose_name='Картинка')
     owner = models.ForeignKey('users.User', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Владелец')
+    update = models.ManyToManyField('users.User', blank=True, null=True, verbose_name='Обновление курса', related_name='courses_update')
 
     class Meta:
         verbose_name = 'Курс'
