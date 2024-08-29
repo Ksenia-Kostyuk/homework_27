@@ -1,0 +1,7 @@
+SECRET_KEY=django-insecure-2@-f8gv=t46)ws^h(bb27(xh^on!55dtvgayv1i)n0#d2dmkzy
+
+NAME=work24
+USER=postgres
+PASSWORD=Kkn_250600
+HOST=localhost
+PORT=1024

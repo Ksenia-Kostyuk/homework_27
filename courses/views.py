@@ -19,9 +19,8 @@ class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
     pagination_class = CustomCoursesPagination
 
-    @action(detail=True, methods=('post',))
-    def updates(self, request, pk):
-        course = get_object_or_404(Course, pk=pk)
+    def perform_update(self, request):
+        course = self.get_object()
         if course.update.exists():
             send_information_about_update_course.delay(request.user.email)
         serializer = self.get_serializer(course)

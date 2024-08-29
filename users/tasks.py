@@ -12,6 +12,7 @@ def user_chek_filter_last_login():
         time_difference = datetime.now() - user.last_login
         if time_difference > timedelta(days=30):
             user.is_active = False
+            user.save()
 
 
 

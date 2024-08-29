@@ -1,9 +1,13 @@
+import os
 from datetime import timedelta
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-2@-f8gv=t46)ws^h(bb27(xh^on!55dtvgayv1i)n0#d2dmkzy'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
@@ -66,11 +70,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        'NAME': 'work24',
-        'USER': 'postgres',
-        'PASSWORD': 'Kkn_250600',
-        'HOST': 'localhost',
-        'PORT': '1024',
+        'NAME': os.getenv('NAME'),
+        'USER': os.getenv('USER'),
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT'),
     }
 }
 
