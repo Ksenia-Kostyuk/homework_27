@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from courses.models import Course
 from lessons.models import Lesson
 from lessons.serializers import LessonSerializer
+from users.serializers import SubscriptionSerializer
 
 
 class CourseSerializer(ModelSerializer):
@@ -16,6 +17,8 @@ class CourseSerializer(ModelSerializer):
 class CourseDetailSerializer(ModelSerializer):
     lesson_count = SerializerMethodField()
     lessons = LessonSerializer()
+    subscription = SubscriptionSerializer()
+
 
     class Meta:
         model = Course
