@@ -7,6 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 from courses.models import Course
 from courses.paginations import CustomCoursesPagination
 from courses.serializers import CourseSerializer
+from users.models import Subscription
 from users.permissions import IsModerator, IsOwner
 from courses.tasks import send_information_about_update_course
 
@@ -21,8 +22,11 @@ class CourseViewSet(ModelViewSet):
 
     def perform_update(self, request):
         course = self.get_object()
+        subscription = Subscription.objects.filter(course=course)
         if course.update.exists():
-            send_information_about_update_course.delay(request.course.user.email)
+            for data in subscription:
+                user = request.data.user.email
+                send_information_about_update_course.delay(user)
         serializer = self.get_serializer(course)
         return Response(serializer.data)
 
