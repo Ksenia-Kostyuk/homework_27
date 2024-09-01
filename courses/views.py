@@ -20,12 +20,12 @@ class CourseViewSet(ModelViewSet):
     serializer_class = CourseSerializer
     pagination_class = CustomCoursesPagination
 
-    def perform_update(self, request):
+    def perform_update(self):
         course = self.get_object()
-        subscription = Subscription.objects.filter(course=course)
+        subscriptions = Subscription.objects.filter(course=course)
         if course.update.exists():
-            for data in subscription:
-                user = request.data.user.email
+            for subscription in subscriptions:
+                user = subscription.user.email
                 send_information_about_update_course.delay(user)
         serializer = self.get_serializer(course)
         return Response(serializer.data)
