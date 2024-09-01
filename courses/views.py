@@ -22,7 +22,7 @@ class CourseViewSet(ModelViewSet):
     def perform_update(self, request):
         course = self.get_object()
         if course.update.exists():
-            send_information_about_update_course.delay(request.user.email)
+            send_information_about_update_course.delay(request.course.user.email)
         serializer = self.get_serializer(course)
         return Response(serializer.data)
 

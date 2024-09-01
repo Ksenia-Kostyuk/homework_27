@@ -41,9 +41,9 @@ class Payment(models.Model):
 
 class Subscription(models.Model):
     user = models.ForeignKey('users.User', on_delete=models.SET_NULL, blank=True, null=True,
-                             verbose_name='Пользователь подписки')
+                             verbose_name='Пользователь подписки', related_name='users')
     course = models.ForeignKey('courses.Course', on_delete=models.SET_NULL, blank=True, null=True,
-                               verbose_name='Курс')
+                               verbose_name='Курс', related_name='courses')
 
     class Meta:
         verbose_name = 'Подписка'
