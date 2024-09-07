@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR / config
 
-COPY poetry.lock
+COPY ./poetry.lock
 
 RUN poetry install
 
